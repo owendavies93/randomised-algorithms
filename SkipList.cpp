@@ -117,7 +117,7 @@ int SkipList::add(SkipListNode* target, SkipListNode* newNode, unsigned int leve
     }
 
     SkipListNode* t = target->nextAtLevel(level);
-    if (t == NULL || newNode < t) {
+    if (t == NULL || *newNode < *t) {
         if (level < newNode->height()) {
             newNode->setNextAtLevel(level, t);
             target->setNextAtLevel(level, newNode);
@@ -136,10 +136,9 @@ SkipListNode* SkipList::find(SkipListNode* target, const Key& key, unsigned int 
     if (target->nextAtLevel(level) != NULL && *(target->nextAtLevel(level)) < key) {
         countFind++;
     }
-    ////////////// Write your code below  ////////////////////////
 
-
-
+    if (target == NULL) return NULL;
+    if (*target == key) return target;
 
     return target;
 }
