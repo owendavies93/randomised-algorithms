@@ -97,10 +97,16 @@ void SkipList::dump(char sep) {
 /////////////////////////////////////////////////////////////
 
 unsigned int SkipList::randHeight() {
-    ////////////// Write your code below  ////////////////////////
+    int t = rand() % RAND_MAX + 1; // t is in range [1, RAND_MAX]
+    int j = 2;
+    unsigned int i = 1;
 
+    for (i = 1; i < m_maxHeight; ++i) {
+        if (t > RAND_MAX / j) break;
+        ++j;
+    }
 
-    return 0; //you have to replace this line with your own.
+    return i;
 }
 
 
