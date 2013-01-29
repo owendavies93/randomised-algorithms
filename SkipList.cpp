@@ -115,11 +115,18 @@ int SkipList::add(SkipListNode* target, SkipListNode* newNode, unsigned int leve
             (*target->nextAtLevel(level)) < *newNode) {
         countAdd++;
     }
-    ////////////// Write your code below  ////////////////////////
 
+    SkipListNode* t = target->nextAtLevel(level);
+    if (t == NULL || newNode < t) {
+        if (level < newNode->height()) {
+            newNode->setNextAtLevel(level, t);
+            target->setNextAtLevel(level, newNode);
+        }
 
-
-    return 0;  //you have to replace this line with your own.
+        return (level > 0) ? add(target, newNode, --level) : 1;
+    } else {
+        return add(t, newNode, level);
+    }    
 }
 
 /////////////////////////////////////////////////////////////
