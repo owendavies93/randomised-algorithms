@@ -140,7 +140,12 @@ SkipListNode* SkipList::find(SkipListNode* target, const Key& key, unsigned int 
     if (target == NULL) return NULL;
     if (*target == key) return target;
 
-    return target;
+    SkipListNode* t = target->nextAtLevel(level);
+    if (t == NULL || key < *t) {
+        return (level == 0) ? NULL : find(target, key, --level);
+    } else {
+        return find(t, key, level);
+    }
 }
 
 
