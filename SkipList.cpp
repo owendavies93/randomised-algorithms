@@ -126,7 +126,7 @@ int SkipList::add(SkipListNode* target, SkipListNode* newNode, unsigned int leve
         return (level > 0) ? add(target, newNode, --level) : 1;
     } else {
         return add(t, newNode, level);
-    }    
+    }
 }
 
 /////////////////////////////////////////////////////////////
@@ -156,8 +156,16 @@ SkipListNode* SkipList::del(SkipListNode* target, const Key& key, unsigned int l
     if (target->nextAtLevel(level) != NULL && *(target->nextAtLevel(level)) < key) {
         countDelete++;
     }
-    ////////////// Write your code below  ////////////////////////
 
+    if (target == NULL) return NULL;
 
-    return NULL; ///you have to replace this line with your own.
+    SkipListNode* t = target->nextAtLevel(level);
+    if (t == NULL || key < *t) {
+        return (level == 0) ? NULL : del(target, key, --level);
+    } else if (key == *t) {
+        target->setNextAtLevel(level, t->nextAtLevel(level));
+        return (level == 0) ? t : del(target, key, --level);
+    } else {
+        return del(t, key, level);
+    }
 }
