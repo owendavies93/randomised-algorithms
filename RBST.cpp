@@ -116,8 +116,26 @@ RBSTNode* RBST::addRoot(RBSTNode* target, const Key& key) {
 
 RBSTNode* RBST::randomAdd(RBSTNode* target, const Key& key) {
     countAdd++;
-    ////////////// Write your code below  ////////////////////////
 
+    if (target == NULL) {
+        m_size++;
+        return new RBSTNode(key);
+    }
+
+    int randomIndex = (rand() % m_size) + 1;
+
+    if (r == 1) {
+        m_size++;
+        return addRoot(target, key);
+    }
+
+    if (key < target->getKey()) {
+        target->setLeft(randomAdd(target->left(), key));
+    } else {
+        target->setRight(randomAdd(target->right(), key));
+    }
+
+    m_size++;
 
     return target;
 };
