@@ -1,4 +1,5 @@
 #include "RBST.hpp"
+#include <stdlib.h>
 /***********************************************************/
 /******************* PROVIDED FUNCTIONS ********************/
 /***********************************************************/
@@ -124,7 +125,7 @@ RBSTNode* RBST::randomAdd(RBSTNode* target, const Key& key) {
 
     int randomIndex = (rand() % m_size) + 1;
 
-    if (r == 1) {
+    if (randomIndex == 1) {
         m_size++;
         return addRoot(target, key);
     }
@@ -147,11 +148,16 @@ RBSTNode* RBST::randomAdd(RBSTNode* target, const Key& key) {
 
 RBSTNode* RBST::find(RBSTNode* target, const Key& key) {
     countFind++;
-    ////////////// Write your code below  ////////////////////////
 
-
-
-    return target;
+    if (target == NULL) {
+        return NULL;
+    } else if (target->getKey() == key) {
+        return target;
+    } else if (key < target->getKey()) {
+        return find(target->left(), key);
+    } else {
+        return find(target->right(), key);
+    }
 }
 
 
@@ -162,11 +168,38 @@ RBSTNode* RBST::find(RBSTNode* target, const Key& key) {
 
 RBSTNode* RBST::del(RBSTNode* target, const Key& key) {
     countDelete++;
-    ////////////// Write your code below  ////////////////////////
 
+    if (target == NULL) {
+        return NULL;
+    }
 
+    if (target->getKey() == key) {
+        if (target->left() == NULL && target->right() == NULL) {
+            return NULL;
+        } else if (target->left() == NULL) {
+            return target->right();
+        } else if (target->right() == NULL) {
+            return target->left();
+        } else {
+            RBSTNode* smallest = smallestChild(target->right());
 
+            target->setKey(smallest->getKey());
 
-    return target;
+            target->setRight(del(target->right(), smallest->getKey()));
+        }
+    }
+
+    if (key < target->getKey()) {
+        return target->setLeft(del(target->left(), key));
+    } else {
+        return target->setRight(del(target->right(), key));
+    }
 };
 
+RBSTNode* RBST::smallestChild(RBSTNode* target) {
+    if (target->left() == NULL) {
+        return target;
+    } else {
+        return smallestChild(target->left());
+    }
+}
