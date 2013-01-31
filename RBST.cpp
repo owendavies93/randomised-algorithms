@@ -80,25 +80,37 @@ int RBST::dump(RBSTNode* target, char sep) {
 /////////////////////////////////////////////////////////////
 
 RBSTNode*  RBST::rightRotate(RBSTNode* target) {
-    ////////////// Write your code below  ////////////////////////
+    RBSTNode* l = target->left();
 
-    return target;
+    target->setLeft(l->right());
+    l->setRight(target);
+
+    return l;
 };
 
 RBSTNode*  RBST::leftRotate(RBSTNode* target) {
-    ////////////// Write your code below  ////////////////////////
+    RBSTNode* r = target->right();
 
+    target->setRight(r->left());
+    r->setLeft(target);
 
-    return target;
+    return r;
 };
 
 RBSTNode* RBST::addRoot(RBSTNode* target, const Key& key) {
     countAdd++;
-    ////////////// Write your code below  ////////////////////////
 
+    if (target == NULL) {
+        return new RBSTNode(key);
+    }
 
-
-    return target;
+    if (key < target->getKey()) {
+        target->setLeft(addRoot(target->left(), key));
+        return rightRotate(target);
+    } else {
+        target->setRight(addRoot(target->right(), key));
+        return leftRotate(target);
+    }
 };
 
 
