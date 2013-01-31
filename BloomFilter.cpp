@@ -79,11 +79,16 @@ void BloomFilter::dump() {
 
 void BloomFilter::add(const Key& key) {
     countAdd++;
-    ////////////// Write your code below  ////////////////////////
 
+    unsigned long h = hash1(key);
+    unsigned long pocket = h / m_pocketSize;
+    unsigned long bit = h % m_pocketSize;
+    m_tickBook[pocket] |= 1 << (m_pocketSize - bit - 1);
 
-
-
+    h = hash2(key);
+    pocket = h / m_pocketSize;
+    bit = h % m_pocketSize;
+    m_tickBook[pocket] |= 1 << (m_pocketSize - bit - 1);
 }
 
 
