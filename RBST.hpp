@@ -19,7 +19,7 @@ public:
     string getKey() {
         return *this;
     }
- 
+
     string setKey(const Key& key) {
         assign(key);
         return Key(key);
@@ -55,7 +55,7 @@ public:
 
     //ADD FUNCTIONS
     int add(const Key& key, bool verbose=false);
-    
+
     //FIND FUNCTIONS
     int find(const Key& key, bool verbose = false);
 
@@ -69,11 +69,11 @@ public:
 private:
     RBSTNode* randomAdd(RBSTNode* target, const Key& key);
     RBSTNode* addRoot(RBSTNode* target, const Key& key);
-    RBSTNode*  rightRotate(RBSTNode* target);
-    RBSTNode*  leftRotate(RBSTNode* target);
+    RBSTNode* rightRotate(RBSTNode* target);
+    RBSTNode* leftRotate(RBSTNode* target);
 
     RBSTNode* del(RBSTNode* target, const Key& key);
-
+    RBSTNode* smallestChild(RBSTNode* target);
     RBSTNode* find(RBSTNode* target, const Key& key);
 
     RBSTNode* m_head;
