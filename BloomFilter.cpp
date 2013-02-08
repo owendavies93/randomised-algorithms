@@ -96,13 +96,23 @@ void BloomFilter::add(const Key& key) {
 /////////////////////  FIND FUNCTIONS ///////////////////////
 /////////////////////////////////////////////////////////////
 
+int BloomFilter::getBit(unsigned long x, unsigned long bit) {
+    return x & (1 << bit);
+}
 
 bool BloomFilter::exist(const Key& key) {
     countFind++;
-    ////////////// Write your code below  ////////////////////////
 
+    unsigned long h1 = hash1(key);
+    unsigned long pocket1 = h1 / m_pocketSize;
+    unsigned long bit1 = h1 % m_pocketSize;
 
-    return false; //you have to replace this line with your own.
+    unsigned long h2 = hash2(key);
+    unsigned long pocket2 = h2 / m_pocketSize;
+    unsigned long bit2 = h2 % m_pocketSize;
+
+    return (getBit(m_tickBook[pocket1], m_pocketSize - bit1 - 1) == 1 &&
+        getBit(m_tickBook[pocket2], m_pocketSize - bit2 - 1) == 1);
 }
 
 
@@ -123,5 +133,3 @@ void BloomFilter::del(const Key& key) {
     bit = h % m_pocketSize;
     m_tickBook[pocket] &= ~(1 << (m_pocketSize - bit - 1));
 }
-
-

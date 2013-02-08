@@ -41,6 +41,8 @@ private:
     unsigned long m_pockets; //the number of pockets
 
     static const unsigned long m_pocketSize; //bits in each pocket
+
+    int getBit(unsigned long x, unsigned long bit);
 };
 
 #endif /*BLOOMFILTER_HPP_*/
