@@ -28,7 +28,7 @@ In this report we will examine the performance of our implementation of the Skip
 
 Here, the Bloom Filter lives up to it's impressive insertion time of \BigO{k}, with the time being constant (dictated by the 2 hash functions in the implementation) for any set size.\\
 
-The RBST performs very well also, with the mean execution time staying very low even for a large set size. We can see that the line matches a $\log$ n graph exactly - our implementation matches the the theoretical prediction of \BigO{\log n} (where n in the set size).\\
+The RBST performs very well also, with the mean execution time staying very low even for a large set size. We can see that the line matches a $\log(n)$ graph exactly - our implementation matches the the theoretical prediction of \BigO{\log n} (where n in the set size).\\
 
 
 \includegraphics[width=\linewidth]{img/Counter-Add}
@@ -40,11 +40,25 @@ The number of comparisons perfomed for RBST insert increases as expected; the bi
 \section*{Deletion}
 
 \includegraphics[width=\linewidth]{img/Timer-Del}
+
+As with insertion, the Bloom Filter has a constant time for its violating deletion function, since the delete operation is indentical in terms of computation to the insert operation. The RBST performs at \BigO{\log n} again.
+
 \includegraphics[width=\linewidth]{img/Counter-Del}
+
+The Bloom Filter peforms independantly of set size, with the counter value staying at a constant 1 throughout. The RBST's delete counter value is significantly higher here than it was in the insertion operation. This is somewhat expected since the delete operation is more complex in a binary search tree, and there are a few more cases where recursive calls are made than there are in insertion.\\
+
+This increase means that our implentation does not quite reach the theoretical complexity of \BigO{\log n}, but looking at the graph we can it still follows the shape of a $\log$ n graph, so it appears that the difference is just a small constant value.
 
 \section*{Search}
 
 \includegraphics[width=\linewidth]{img/Timer-Find}
+
+As expected, membership test for the Bloom Filter is very fast, and conforms to theoretical \BigO{k} time that we have seen with the toerh operations. Obviously membership test can provide a false positive in the Bloom Filter, but it is clear that if speed is very important then the Bloom Filter is the way to go out of these three structures.\\
+
+Thanks to the randomised nature of the input, the RBST performs well here also. Over a large data set with a lot of repetitions, RBST performs at \BigO{\log_2 n}, as the randomised input ``irons out'' the tree to make it as balanced as possible. This is reflected in the graph above.
+
 \includegraphics[width=\linewidth]{img/Counter-Find}
+
+The results are fairly standard here. The RBST perfroms at \BigO{\log_2 n} as expected; given that the tree is well balanced there should be $\log_2(n) = h$ recursive calls to the serach function. The Bloom Filter is constant as always.
 
 \end{document}
