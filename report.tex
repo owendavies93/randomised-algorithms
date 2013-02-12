@@ -30,8 +30,7 @@ Here, the Bloom Filter lives up to it's impressive insertion time of \BigO{k}, w
 
 The RBST performs very well also, with the mean execution time staying very low even for a large set size. We can see that the line matches a $\log(n)$ graph exactly - our implementation matches the the theoretical prediction of \BigO{\log n} (where n in the set size).\\
 
-The Skip List performs slightly worse than the RBST on this test, but the performance of the two only differs by a small constant factor.
-
+The Skip List performs slightly worse than the RBST on this test, but the performance of the two only differs by a small constant factor. The performance still approximatly matches the theoretical time complexity of \BigO{\log n}.
 
 \includegraphics[width=\linewidth]{img/Counter-Add}
 
@@ -39,19 +38,19 @@ The same can be said for the number of comparisons as was said for the execution
 
 The number of comparisons perfomed for RBST insert increases as expected; the bigger the size of the tree, the more recursive calls have to be made. This line still very much conforms to the theoretical complexity of $\log$ n, which makes perfect sense considering the shape of a BST.\\
 
-The preformance for the Skip List is identical to the RBST at a low set size. However, from about 200 upwards Skip List performs slightly worse in this test.
+The preformance for the Skip List is identical to the RBST at a low set size. However, from about 200 upwards Skip List performs slightly worse in this test, making almost double the number of recursive calls when the set size is at its greatest.
 
 \section*{Deletion}
 
 \includegraphics[width=\linewidth]{img/Timer-Del}
 
-As with insertion, the Bloom Filter has a constant time for its violating deletion function, since the delete operation is indentical in terms of computation to the insert operation. The RBST performs at \BigO{\log n} again.
+As with insertion, the Bloom Filter has a constant time for its violating deletion function, since the delete operation is indentical in terms of computation to the insert operation. The RBST performs at around \BigO{\log n} here. The Skip list again performs marginally worse than the RBST, but its performance is still approximate to \BigO{\log n}, as discussed in the notes.
 
 \includegraphics[width=\linewidth]{img/Counter-Del}
 
 The Bloom Filter peforms independantly of set size, with the counter value staying at a constant 1 throughout. The RBST's delete counter value is significantly higher here than it was in the insertion operation. This is somewhat expected since the delete operation is more complex in a binary search tree, and there are a few more cases where recursive calls are made than there are in insertion.\\
 
-This increase means that our implentation does not quite reach the theoretical complexity of \BigO{\log n}, but looking at the graph we can it still follows the shape of a $\log$ n graph, so it appears that the difference is just a small constant value.
+This increase means that our implentation does not quite reach the theoretical complexity of \BigO{\log n}, but looking at the graph we can it still follows the shape of a $\log$ n graph, so it appears that the difference is just a small constant value. The increase also means that this is the first test where the Skip List performs better than the RBST, as the Skip List doesn't have to worry about balancing once the node has been deleted.\\
 
 \section*{Search}
 
@@ -59,10 +58,19 @@ This increase means that our implentation does not quite reach the theoretical c
 
 As expected, membership test for the Bloom Filter is very fast, and conforms to theoretical \BigO{k} time that we have seen with the toerh operations. Obviously membership test can provide a false positive in the Bloom Filter, but it is clear that if speed is very important then the Bloom Filter is the way to go out of these three structures.\\
 
-Thanks to the randomised nature of the input, the RBST performs well here also. Over a large data set with a lot of repetitions, RBST performs at \BigO{\log_2 n}, as the randomised input ``irons out'' the tree to make it as balanced as possible. This is reflected in the graph above.
+Thanks to the randomised nature of the input, the RBST performs well here also. Over a large data set with a lot of repetitions, RBST performs at \BigO{\log n}, as the randomised input ``irons out'' the tree to make it as balanced as possible. This is reflected in the graph above.\\
+
+This is also true of the Skip List, however the performance is again slightly worse than the RBST. This is because the randomisation used by the Skip List to reduce insertion time complexity to \BigO{\log n} means that the Skip List is not perfectly ``balanced'' (in other words the links are not always ideally spaced), whereas the randomisation in the RBST makes the tree almost perfectly balanced.
 
 \includegraphics[width=\linewidth]{img/Counter-Find}
 
-The results are fairly standard here. The RBST perfroms at \BigO{\log_2 n} as expected; given that the tree is well balanced there should be $\log_2(n) = h$ recursive calls to the serach function. The Bloom Filter is constant as always.
+The results are fairly standard here. The RBST perfroms at \BigO{\log n} as expected; given that the tree is well balanced there should be $\log(n) = h$ recursive calls to the serach function. The Skip List performs marginally better on a very low set size, but - for reasons discussed in the paragraph above - performs marginally worse on larger set sizes. The Bloom Filter is constant as always. 
+
+
+\section*{Performance at Different Set Sizes}
+
+All the graphs above were for a set size of 5000. At a very small set size (less than 20), the Skip List outperforms the RBST on the insert and search operations in terms of the nubmer of recursive calls made, although the execution time was still slower.\\
+
+For much larger set sizes, the results are unremarkable. The Bloom Filter continues to perform in constant time. The RBST and Skip List both perform at \BigO{\log n}, but with the Skip List slower by a small constant factor, as was evident in the graphs in the previous section.
 
 \end{document}
