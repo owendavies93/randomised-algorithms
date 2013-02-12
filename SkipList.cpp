@@ -103,12 +103,11 @@ unsigned int SkipList::randHeight() {
 
     for (i = 1; i < m_maxHeight; ++i) {
         if (t > RAND_MAX / j) break;
-        ++j;
+        j += j;
     }
 
     return i;
 }
-
 
 int SkipList::add(SkipListNode* target, SkipListNode* newNode, unsigned int level) {
     if (target->nextAtLevel(level) != NULL &&
@@ -128,6 +127,7 @@ int SkipList::add(SkipListNode* target, SkipListNode* newNode, unsigned int leve
         return add(t, newNode, level);
     }
 }
+
 
 /////////////////////////////////////////////////////////////
 /////////////////////  FIND FUNCTION ////////////////////////
