@@ -24,18 +24,22 @@ In this report we will examine the performance of our implementation of the Skip
 
 \section*{Insertion}
 
-\includegraphics[width=\linewidth]{img/Timer-Add}
+\includegraphics[width=\textwidth]{img/Timer-Add}
 
 Here, the Bloom Filter lives up to it's impressive insertion time of \BigO{k}, with the time being constant (dictated by the 2 hash functions in the implementation) for any set size.\\
 
 The RBST performs very well also, with the mean execution time staying very low even for a large set size. We can see that the line matches a $\log(n)$ graph exactly - our implementation matches the the theoretical prediction of \BigO{\log n} (where n in the set size).\\
+
+The Skip List performs slightly worse than the RBST on this test, but the performance of the two only differs by a small constant factor.
 
 
 \includegraphics[width=\linewidth]{img/Counter-Add}
 
 The same can be said for the number of comparisons as was said for the execution time. The Bloom Filter is constant for all set sizes as the only computation done is to hash the key and change the correct bits in the filter.\\
 
-The number of comparisons perfomed for RBST insert increases as expected; the bigger the size of the tree, the more recursive calls have to be made. This line still very much conforms to the theoretical complexity of $\log$ n, which makes perfect sense considering the shape of a BST.
+The number of comparisons perfomed for RBST insert increases as expected; the bigger the size of the tree, the more recursive calls have to be made. This line still very much conforms to the theoretical complexity of $\log$ n, which makes perfect sense considering the shape of a BST.\\
+
+The preformance for the Skip List is identical to the RBST at a low set size. However, from about 200 upwards Skip List performs slightly worse in this test.
 
 \section*{Deletion}
 
